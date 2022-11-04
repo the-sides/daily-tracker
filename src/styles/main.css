@@ -1,0 +1,15 @@
+:root {
+    --dark: rgb(41, 41, 43);
+    --light:  rgb(236, 236, 236);
+}
+
+body {
+    background-color: var(--dark) ;
+    color: var(--light)
+}
+
+textarea,
+input {
+    color: var(--dark);
+    @apply p-3 rounded-l-md;
+}

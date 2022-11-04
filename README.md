@@ -1,18 +1,11 @@
-# create-svelte
+# Daily Tracker
+Small PWA for tracking hourly updates, as I'm swapping between work and play, providing updates whenever I start something new.
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Should be an interesting way to learn how to write with time more.
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+Persisting data:
+I'm using localStorage since my use case considers all these ponts.
+https://www.rdegges.com/2018/please-stop-using-local-storage/
 
 ## Developing
 
