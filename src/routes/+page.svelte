@@ -11,6 +11,11 @@
 		Log('Status Items', statuses)
 		window.localStorage.setItem('items', JSON.stringify({statuses}) )
 	};
+	
+	const deleteLast = () => {
+		statuses.pop();
+		statuses = [...statuses];
+	};
 
 	onMount(() => {
 		const itemsString = window.localStorage.getItem('items')
@@ -30,6 +35,7 @@
 		<div class="flex gap-8 mt-8">
 			<Button color="red">Not working</Button>
 			<Button color="green">working</Button>
+			<Button callback={deleteLast}>Delete last</Button>
 		</div>
 	</div>
 	<div class="absolute inset-0 w-full h-full flex flex-col flex-wrap">
