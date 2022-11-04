@@ -24,6 +24,7 @@
 	};
 
 	const copyScrollToStatusRoot = (evt) => {
+		// https://alvarotrigo.com/blog/scroll-horizontally-with-mouse-wheel-vanilla-java/
 		statusRootElm.style.scrollBehavior = '';
 		statusRootElm.scrollLeft += evt.deltaY / 2;
 		statusRootElm.style.scrollBehavior = 'smooth';
