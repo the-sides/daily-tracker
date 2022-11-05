@@ -9,6 +9,7 @@
 
 	let statuses = [];
 	let statusRootElm;
+	let statusEntryOpen = true;
 
 	const saveStatus = (value) => {
 		statuses = [...statuses, value];
@@ -22,6 +23,14 @@
 		statuses = [...statuses];
 		scrollPageToEndLeft(statusRootElm);
 	};
+	const clearAllItems = () => {
+		// TODO: Prompt user first
+		statuses = [];
+	};
+
+	const flipStatusEntryOpen = () => {
+		statusEntryOpen = !statusEntryOpen;
+	}
 
 	const copyScrollToStatusRoot = (evt) => {
 		// https://alvarotrigo.com/blog/scroll-horizontally-with-mouse-wheel-vanilla-java/
@@ -45,7 +54,7 @@
 </script>
 
 <main class="relative h-[calc(100vh-24px)] w-screen">
-	<div class="fixed inset-0 min-h-screen z-10">
+	<div class="fixed inset-0 min-h-screen z-10 transition-transform duration-500 {!statusEntryOpen ? '-translate-y-full' :''}">
 		<div
 			class="relative z-10 flex flex-col items-center justify-center h-full p-8 md:p-24 text-center "
 		>
@@ -55,10 +64,11 @@
 				<Button color="red" _class="col-span-3">Not working</Button>
 				<Button color="green" _class="col-span-3">working</Button>
 				<!-- <Button callback={deleteLast}>Delete last</Button> -->
-				<Button _class="sdcale-x-150 col-span-6">^</Button>
+				<Button callback={flipStatusEntryOpen} _class="sdcale-x-150 col-span-6">^</Button>
 			</div>
 		</div>
 		<div class="bg bg-black bg-opacity-40 w-full-h-full absolute inset-0 z-0 " />
+		<Button callback={flipStatusEntryOpen} _class="absolute -bottom-24 inset-x-0 mx-auto w-48">^</Button>
 	</div>
 	<div
 		bind:this={statusRootElm}
@@ -72,5 +82,6 @@
 	</div>
 	<div class="fixed bottom-12 right-12 z-10">
 		<Button callback={deleteLast} _class="hover:bg-opacity-75">Delete last</Button>
+		<Button callback={clearAllItems} _class="hover:bg-opacity-75">Clear all</Button>
 	</div>
 </main>
