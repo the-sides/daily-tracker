@@ -10,6 +10,7 @@
 	let statuses = [];
 	let statusRootElm;
 	let statusEntryOpen = true;
+	$: shouldTranslateStatusEntry = !statusEntryOpen ? '-translate-y-full' : '';
 
 	const saveStatus = (value) => {
 		statuses = [...statuses, value];
@@ -30,7 +31,7 @@
 
 	const flipStatusEntryOpen = () => {
 		statusEntryOpen = !statusEntryOpen;
-	}
+	};
 
 	const copyScrollToStatusRoot = (evt) => {
 		// https://alvarotrigo.com/blog/scroll-horizontally-with-mouse-wheel-vanilla-java/
@@ -54,7 +55,9 @@
 </script>
 
 <main class="relative h-[calc(100vh-24px)] w-screen">
-	<div class="fixed inset-0 min-h-screen z-10 transition-transform duration-500 {!statusEntryOpen ? '-translate-y-full' :''}">
+	<div
+		class="fixed inset-0 min-h-screen z-10 transition-transform duration-500 {shouldTranslateStatusEntry}"
+	>
 		<div
 			class="relative z-10 flex flex-col items-center justify-center h-full p-8 md:p-24 text-center "
 		>
@@ -68,7 +71,9 @@
 			</div>
 		</div>
 		<div class="bg bg-black bg-opacity-40 w-full-h-full absolute inset-0 z-0 " />
-		<Button callback={flipStatusEntryOpen} _class="absolute -bottom-24 inset-x-0 mx-auto w-48">^</Button>
+		<Button callback={flipStatusEntryOpen} _class="absolute -bottom-24 inset-x-0 mx-auto w-48"
+			>^</Button
+		>
 	</div>
 	<div
 		bind:this={statusRootElm}
@@ -77,7 +82,7 @@
 	>
 		<h2 class="sticky top-0 left-0 text-3xl">Entry for <br />{new Date().toDateString()}</h2>
 		{#each statuses as status}
-			<p class="max-w-[33%]">{status}</p>
+			<p class="max-w-[33%] mt-1">{@html status.replaceAll('\n', '<br/>')}</p>
 		{/each}
 	</div>
 	<div class="fixed bottom-12 right-12 z-10">
