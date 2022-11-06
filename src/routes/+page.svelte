@@ -5,15 +5,16 @@
 	import StatusInput from '../components/statusInput.svelte';
 
 	import { Log } from '$lib/Logger';
-	import { scrollPageToEndLeft } from './../lib/utils.js';
+	import { buildStatusItem, scrollPageToEndLeft } from './../lib/utils.js';
 
 	let statuses = [];
 	let statusRootElm;
 	let statusEntryOpen = true;
+	let currentTime = new Date();
 	$: shouldTranslateStatusEntry = !statusEntryOpen ? '-translate-y-full' : '';
 
 	const saveStatus = (value) => {
-		statuses = [...statuses, value];
+		statuses = [...statuses, { t: new Date().getTime(), v: value }];
 		Log('Status Items', statuses);
 		window.localStorage.setItem('items', JSON.stringify({ statuses }));
 		scrollPageToEndLeft(statusRootElm);
@@ -27,6 +28,7 @@
 	const clearAllItems = () => {
 		// TODO: Prompt user first
 		statuses = [];
+		window.localStorage.removeItem('items');
 	};
 
 	const flipStatusEntryOpen = () => {
@@ -48,8 +50,13 @@
 		document.addEventListener('wheel', copyScrollToStatusRoot);
 		scrollPageToEndLeft(statusRootElm);
 
+		const timeSyncer = setInterval(() => {
+			currentTime = new Date();
+		}, 1000);
+
 		return () => {
 			document.removeEventListener('wheel', copyScrollToStatusRoot);
+			clearInterval(timeSyncer);
 		};
 	});
 </script>
@@ -62,7 +69,7 @@
 			class="relative z-10 flex flex-col items-center justify-center h-full p-8 md:p-24 text-center "
 		>
 			<h1 class="text-5xl lg:text-9xl opacity-75">What the fuck<br />are you doing?</h1>
-			<StatusInput _class="mt-20" {saveStatus} />
+			<StatusInput _class="mt-20" {currentTime} {saveStatus} />
 			<div class="grid gap-x-3 gap-y-5 mt-8 grid-cols-6">
 				<Button color="red" _class="col-span-3">Not working</Button>
 				<Button color="green" _class="col-span-3">working</Button>
@@ -82,7 +89,7 @@
 	>
 		<h2 class="sticky top-0 left-0 text-3xl">Entry for <br />{new Date().toDateString()}</h2>
 		{#each statuses as status}
-			<p class="max-w-[33%] mt-1">{@html status.replaceAll('\n', '<br/>')}</p>
+			<div class="max-w-[33%] mt-1">{@html buildStatusItem(status)}</div>
 		{/each}
 	</div>
 	<div class="fixed bottom-12 right-12 z-10">

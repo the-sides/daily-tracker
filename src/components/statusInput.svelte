@@ -4,6 +4,7 @@
 
 	export let _class;
 	export let saveStatus;
+	export let currentTime;
 
 	let inputElm;
 	let inputKeyMapping = new Map();
@@ -41,6 +42,7 @@
 </script>
 
 <form on:submit={(e) => saveStatus(e, inputElm)} class={_class + ' max-w-full w-[400px] relative'}>
+	<span class="absolute left-[-3rem] h-6 inset-y-0 my-auto">{currentTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false})}</span>
 	<textarea
 		bind:this={inputElm}
 		type="text"
