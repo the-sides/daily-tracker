@@ -7,6 +7,21 @@ Persisting data:
 I'm using localStorage since my use case considers all these ponts.
 https://www.rdegges.com/2018/please-stop-using-local-storage/
 
+## TODO 
+- Global time object for all instances referring to time
+- Timers on play/work buttons
+- Import file for viewing
+- Export a day's entry (preferably on sleep)
+- Sleep button to close out entry
+- Hovering over status item shows the exact time to the second
+- Consider optimizing time object by rounding to seconds, not milliseconds
+- D-pad layout for bottom-right controls
+- Icons (for D-pad, send and entryCurtain toggles)
+- Hotspot in TL corner that raises entryCurtain
+- saving to database
+- hour glasses containing remaing play and work time. (would be encouraging for work and releasing how much of your afternoon you have left.)
+
+
 ## Developing
 
 Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
